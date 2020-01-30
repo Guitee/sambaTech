@@ -16,7 +16,44 @@
             </div> 
                         
          </div>
-                       
+         <div class="contents">
+            <h1> Personagens</h1>
+            <div id="characters">
+            </div>
+         </div>
+      <script>
+         var addCharacter = function(name, date, occupation, img) {
+            var container = document.getElementById("characters");
+
+            var characterDiv = document.createElement('div');
+            characterDiv.className = 'character-container';
+            characterDiv.style.backgroundImage = "url("+img+")";
+
+            var characterLabelDiv = document.createElement('div');
+            characterLabelDiv.className = 'character-text-content';
+            characterDiv.appendChild(characterLabelDiv);
+
+            var characterLabelDivName = document.createElement('div');
+            characterLabelDivName.className = 'character-text-content-name';
+            characterLabelDivName.innerHTML = name;
+            characterLabelDiv.appendChild(characterLabelDivName);
+
+            var characterLabelDivDate = document.createElement('div');
+            characterLabelDivDate.className = 'character-text-content-date';
+            characterLabelDivDate.innerHTML = date;
+            characterLabelDiv.appendChild(characterLabelDivDate);
+
+            var characterLabelDivOccupation = document.createElement('div');
+            characterLabelDivOccupation.className = 'character-text-content-occupation';
+            characterLabelDivOccupation.innerHTML = occupation;
+            characterLabelDiv.appendChild(characterLabelDivOccupation);
+
+            container.appendChild(characterDiv);
+         }
+
+         addCharacter("walter white", "000", "professor", "../resources/logo2.png");
+         addCharacter("walter black", "232323", "estudante", "../resources/logo2.png");
+      </script>
     </body>
 
 

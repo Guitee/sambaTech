@@ -1,5 +1,11 @@
+@font-face {
+   font-family: mainFont;
+   src: url(../../resources/font/Segan-Light.ttf);
+}
+
 .page {
    background: #343;
+   font-family: mainFont;
 }
 
 .top-bar {
@@ -18,4 +24,48 @@
 .logo{
    max-width:100%; 
    max-height:100%;
+}
+
+.contents{
+   color:#ffff;
+   padding: 64px;
+}
+
+#characters{
+   color:#ffff;
+   display: grid;
+   margin-top: 64px;
+   grid-template-columns: auto auto auto auto;
+   grid-column-gap: 32px;
+   grid-row-gap: 32px;
+}
+
+.character-container{
+   width: 250px;
+   height: 320px;
+   background: black;
+   position: relative;
+}
+
+.character-text-content {
+   position:absolute;
+   bottom: 0px;
+   width: 100%;
+   height: 90px;
+   display: block;
+   background-image: linear-gradient(transparent, black);
+   padding: 16px;
+   box-sizing: border-box;
+}
+
+.character-text-content-name {
+   font-size: 24px;
+}
+
+.character-text-content-date {
+   font-size: 16px;
+}
+
+.character-text-content-occupation {
+   font-size: 16px;
 }
