@@ -12,16 +12,29 @@
             </div>
             
             <div class="text-container">
-                  <input class="input-style" type="text" placeholder="Pesquise os personagens">
+                  <input id="search-input" type="text" placeholder="Pesquise os personagens">
             </div> 
                         
          </div>
          <div class="contents">
-            <h1> Personagens</h1>
+            <div id="characters-title">Personagens</div>
             <div id="characters">
             </div>
          </div>
       <script>
+         function httpGetAsync(theUrl, callback){
+           var xmlHttp = new XMLHttpRequest();
+           xmlHttp.onreadystatechange = function(){
+              if(xmlHttp.readyState == 4){
+                 if(xmlHttp.status == 200){
+                    callback(xmlHttp.responseText);
+                 }
+              }
+           }
+           xmlHttp.open("GET",theUrl,true);
+           xmlHttp.send(null);
+        }
+
          var addCharacter = function(name, date, occupation, img) {
             var container = document.getElementById("characters");
 
@@ -57,6 +70,11 @@
             //deletar divs de personagem anteriores
             var container = document.getElementById("characters");
             container.innerHTML = "";
+
+            //mudar titulo
+            var title = document.getElementById("characters-title");
+            title.innerHTML = "Personagens";
+
             //carregar dados novos
             httpGetAsync("https://www.breakingbadapi.com/api/characters", function(response) {
                var data = JSON.parse(response);
@@ -76,24 +94,51 @@
                   addCharacter(nameStr, dateStr, occupationStr, img)
                }
             });
-            //requisicao da api
-            //para cada personagem retornado, chamar addCharacter com os dados dele
          }
          getAllCharacters();
 
-        function httpGetAsync(theUrl, callback){
-           var xmlHttp = new XMLHttpRequest();
-           xmlHttp.onreadystatechange = function(){
-              if(xmlHttp.readyState == 4){
-                 if(xmlHttp.status == 200){
-                    callback(xmlHttp.responseText);
-                 }
-              }
-           }
-           xmlHttp.open("GET",theUrl,true);
-           xmlHttp.send(null);
-        }
+         var searchCharacter = function(str) {
+            //deletar divs de personagem anteriores
+            var container = document.getElementById("characters");
+            container.innerHTML = "";
 
+            //mudar titulo
+            var title = document.getElementById("characters-title");
+            title.innerHTML = "Você pesquisou por '"+str+"'";
+
+            //carregar dados novos
+            var searchTerm = str.split(" ").join("+"); //trocar espacos por '+'
+            httpGetAsync("https://www.breakingbadapi.com/api/characters?name="+searchTerm, function(response) {
+               var data = JSON.parse(response);
+               for(var i in data) {
+                  //cada personagem
+                  var nameStr = data[i].name;
+                  var dateStr = data[i].birthday;
+                  var occupation = data[i].occupation;
+                  var occupationStr = "";
+                  var img = data[i].img;
+                  for(var k = 0; k < occupation.length; k++) {
+                     occupationStr += occupation[k];
+                     if(k < occupation.length-1) {
+                        occupationStr += ", ";
+                     }
+                  }
+                  addCharacter(nameStr, dateStr, occupationStr, img)
+               }
+            });
+         }
+
+         var prepareSearchInput = function() {
+            var input = document.getElementById("search-input");
+            input.addEventListener('input', function(event) {
+               if(input.value.length == 0) {
+                  getAllCharacters();
+               } else {
+                  searchCharacter(input.value);
+               }
+            });
+         }
+         prepareSearchInput();
       </script>
     </body>
 

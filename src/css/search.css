@@ -5,16 +5,16 @@
     
   }
 
-.input-style {
+#search-input {
     background: transparent;
     border-style: solid;
-    border-color: #7f7;
+    border-color: rgb(76, 112, 65);
     border-width: 0px 0px 1px 0px;
     color: white;
     font-size: 18px;
     width: 400px ;
 }
 
-.input-style:focus {
+#search-input:focus {
     outline: none;
 }

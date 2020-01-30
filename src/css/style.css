@@ -4,7 +4,7 @@
 }
 
 .page {
-   background: #343;
+   background: rgb(20, 22, 21);
    font-family: mainFont;
 }
 
@@ -45,6 +45,7 @@
    height: 320px;
    background: black;
    position: relative;
+   border-radius: 8px;
 }
 
 .character-text-content {
@@ -70,4 +71,8 @@
 
 .character-text-content-occupation {
    font-size: 16px;
+}
+
+#characters-title {
+   font-size: 32px;
 }
