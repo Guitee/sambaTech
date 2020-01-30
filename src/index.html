@@ -28,6 +28,8 @@
             var characterDiv = document.createElement('div');
             characterDiv.className = 'character-container';
             characterDiv.style.backgroundImage = "url("+img+")";
+            characterDiv.style.backgroundSize = "cover";
+            characterDiv.style.backgroundPosition = "center center";
 
             var characterLabelDiv = document.createElement('div');
             characterLabelDiv.className = 'character-text-content';
@@ -51,8 +53,47 @@
             container.appendChild(characterDiv);
          }
 
-         addCharacter("walter white", "000", "professor", "../resources/logo2.png");
-         addCharacter("walter black", "232323", "estudante", "../resources/logo2.png");
+         var getAllCharacters = function() {
+            //deletar divs de personagem anteriores
+            var container = document.getElementById("characters");
+            container.innerHTML = "";
+            //carregar dados novos
+            httpGetAsync("https://www.breakingbadapi.com/api/characters", function(response) {
+               var data = JSON.parse(response);
+               for(var i in data) {
+                  //cada personagem
+                  var nameStr = data[i].name;
+                  var dateStr = data[i].birthday;
+                  var occupation = data[i].occupation;
+                  var occupationStr = "";
+                  var img = data[i].img;
+                  for(var k = 0; k < occupation.length; k++) {
+                     occupationStr += occupation[k];
+                     if(k < occupation.length-1) {
+                        occupationStr += ", ";
+                     }
+                  }
+                  addCharacter(nameStr, dateStr, occupationStr, img)
+               }
+            });
+            //requisicao da api
+            //para cada personagem retornado, chamar addCharacter com os dados dele
+         }
+         getAllCharacters();
+
+        function httpGetAsync(theUrl, callback){
+           var xmlHttp = new XMLHttpRequest();
+           xmlHttp.onreadystatechange = function(){
+              if(xmlHttp.readyState == 4){
+                 if(xmlHttp.status == 200){
+                    callback(xmlHttp.responseText);
+                 }
+              }
+           }
+           xmlHttp.open("GET",theUrl,true);
+           xmlHttp.send(null);
+        }
+
       </script>
     </body>
 
