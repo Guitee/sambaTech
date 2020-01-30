@@ -1,0 +1,21 @@
+.page {
+   background: #343;
+}
+
+.top-bar {
+   display: flex;
+   align-items: center;
+   margin: 32px;
+}
+
+.figure {
+   width:150px; 
+   height:100px;
+   display: inline-block;
+   flex-grow: 1;
+}
+
+.logo{
+   max-width:100%; 
+   max-height:100%;
+}
